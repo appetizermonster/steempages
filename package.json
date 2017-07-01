@@ -1,0 +1,17 @@
+{
+  "name": "steempages",
+  "version": "0.0.1",
+  "description": "steempages for jekyll",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "author": "Heejin Lee <monster@teamappetizer.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "3.0.1",
+    "simple-git": "1.73.0",
+    "steem": "0.5.20"
+  }
+}
