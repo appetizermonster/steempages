@@ -31,7 +31,6 @@ async function updateRepoWithSteemit() {
   // checkout gh-pages
   console.log('cloning github repo...');
   await repo.clone(repoUrl, '.');
-  await repo.checkout('gh-pages');
   await repo.pull();
 
   // fetch posts
