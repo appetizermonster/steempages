@@ -2,7 +2,7 @@
 
 function fixImageLinks(body) {
   const re = /(!\[\]\()?(https?:\/\/.+\.(png|jpg|jpeg|gif))\)?/gm;
-  return body.replace(re, '<img src="$2">');
+  return body.replace(re, '<img src="$2" style="max-width:100%;">');
 }
 
 function makeMarkdown(title, body) {
