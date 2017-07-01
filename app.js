@@ -36,6 +36,8 @@ async function updateRepoWithSteemit() {
 
   // fetch posts
   console.log('fetching posts from steemit...');
+  await fse.ensureDir('out/_posts');
+
   const posts = await fetcher.fetchAllPosts('heejin');
   let changed = false;
   for (const post of posts) {
