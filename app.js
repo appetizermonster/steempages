@@ -61,10 +61,10 @@ async function updateRepoWithSteemit() {
   // commit changes
   if (changed) {
     console.log('pushing the repo...');
-    await repo.add('_posts/*');
-    await repo.commit('Update posts by steempages');
     await repo.addConfig('user.name', 'steempages');
     await repo.addConfig('user.email', 'noemail');
+    await repo.add('_posts/*');
+    await repo.commit('Update posts by steempages');
     await repo.push('origin');
   } else {
     console.log('nothing has been changed');
