@@ -2,6 +2,7 @@
   "EXCLUDE_TAGS": ["chainbb-bug", "kr-qna", "steem-help"],
   "EXCLUDE_PERMLINKS": [
     "hello-i-m-newbie-for-steemit",
-    "suggestion-do-not-show-the-reward-information-that-the-post-author-will-get"
+    "suggestion-do-not-show-the-reward-information-that-the-post-author-will-get",
+    "7p7sxx"
   ]
 }
