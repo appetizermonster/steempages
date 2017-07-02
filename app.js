@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const fse = require('fs-extra');
 const git = require('simple-git');
 
