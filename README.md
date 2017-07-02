@@ -46,14 +46,14 @@ You can use Travis CI with your Github account.
 [Travis CI](https://travis-ci.org)
 
 You will see `steempages` on your `Accounts` page.  
-Turn on the option to use Travis CI in your `steempages` repo and open the `Settings` in the repo.
+Turn on the option to use Travis CI in your `steempages` repo and open the `Settings` for the repo.
 
 <center>
 
 ![](docs/travis_repo.gif)
 </center>
 
-In Environment Variables, Enter Name as `API_TOKEN`, Value as Personal Access Token generated in Step 3, and press `Add` button to add environment variable.
+In Environment Variables of Settings, Enter Name as `API_TOKEN`, Value as Personal Access Token generated in Step 3, and press `Add` button to add environment variable.
 
 <center>
 
@@ -72,7 +72,7 @@ Put your Steemit ID for `AUTHOR`, and the URL of your Github Pages repository in
 ![](docs/edit_config.gif)
 </center>
 
-You can customize the rest settings.
+You can customize the rest settings.  
 Finally, when you save and commit the file, Steemit posts will be uploaded to your Github Pages repo.  
 You can check the build status in the Travis CI.  
 After the build, you can see the Steemit posts on your blog!
