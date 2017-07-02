@@ -19,8 +19,8 @@ const config = {
   OVERWRITE_POSTS: false,
   NO_PUSH: false,
 
-  EXCLUDE_TAGS: '',
-  EXCLUDE_PERMLINKS: ''
+  EXCLUDE_TAGS: [],
+  EXCLUDE_PERMLINKS: []
 };
 
 // environment variables

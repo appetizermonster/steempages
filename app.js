@@ -14,9 +14,6 @@ const username = regexRet[1];
 const reponame = regexRet[2];
 const repoUrl = `https://${username}:${config.API_TOKEN}@github.com/${username}/${reponame}.git`;
 
-const excludeTags = config.EXCLUDE_TAGS.split(',');
-const excludePermlinks = config.EXCLUDE_PERMLINKS.split(',');
-
 async function updateRepoWithSteemit() {
   await fse.remove('out');
   await fse.ensureDir('out');
@@ -38,12 +35,12 @@ async function updateRepoWithSteemit() {
   const posts = await fetcher.fetchAllPosts('heejin');
   let changed = false;
   for (const post of posts) {
-    const isExcludedPermlink = _.indexOf(excludePermlinks, post.permlink) >= 0;
+    const isExcludedPermlink = _.indexOf(config.EXCLUDE_PERMLINKS, post.permlink) >= 0;
     if (isExcludedPermlink) {
       console.log(`skipping ${post.permlink} becauseof excluded permlink`);
       continue;
     }
-    const hasExcludedTag = _.intersection(excludeTags, post.tags).length > 0;
+    const hasExcludedTag = _.intersection(config.EXCLUDE_TAGS, post.tags).length > 0;
     if (hasExcludedTag) {
       console.log(`skipping ${post.permlink} becauseof excluded tags`);
       continue;
