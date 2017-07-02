@@ -6,6 +6,7 @@ const git = require('simple-git');
 
 const fetcher = require('./fetcher');
 const formatter = require('./formatter');
+const postFilter = require('./post-filter');
 const config = require('./config');
 
 const githubUrl_re = /github\.com\/([^\/]+)\/(.+)/i;
@@ -40,14 +41,8 @@ async function updateRepoWithSteemit() {
   const posts = await fetcher.fetchAllPosts(config.AUTHOR);
   let changed = false;
   for (const post of posts) {
-    const isExcludedPermlink = _.indexOf(config.EXCLUDE_PERMLINKS, post.permlink) >= 0;
-    if (isExcludedPermlink) {
-      console.log(`skipping ${post.permlink} becauseof excluded permlink`);
-      continue;
-    }
-    const hasExcludedTag = _.intersection(config.EXCLUDE_TAGS, post.tags).length > 0;
-    if (hasExcludedTag) {
-      console.log(`skipping ${post.permlink} becauseof excluded tags`);
+    if (!postFilter.isOkay(post)) {
+      console.log(`skipping ${post.permlink} becauseof filter`);
       continue;
     }
 
