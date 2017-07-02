@@ -40,8 +40,7 @@ Check the `repo` permission as shown below.
 Once the token is generated, copy the token and keep it in a temporary safe place. it's required in the next step.
 
 ### Step 4. Setup Travis CI
-Travis CI is required for automatic synchronization.  
-You can use Travis CI with your Github account.
+Travis CI is required for automatic synchronization. You can use Travis CI with your Github account.
 
 [Travis CI](https://travis-ci.org)
 
@@ -53,7 +52,7 @@ Turn on the option to use Travis CI in your `steempages` repo and open the `Sett
 ![](docs/travis_repo.gif)
 </center>
 
-In Environment Variables of Settings, Enter Name as `API_TOKEN`, Value as Personal Access Token generated in Step 3, and press `Add` button to add environment variable.
+In Environment Variables of Settings, Enter name as `API_TOKEN`, value as the Personal Access Token generated in Step 3, and press `Add` button to add environment variable.
 
 <center>
 
@@ -61,8 +60,7 @@ In Environment Variables of Settings, Enter Name as `API_TOKEN`, Value as Person
 </center>
 
 ### Final Step. Configure your Steempages repo
-Open the `steempages` repository forked in Step 2.  
-You have to edit `config.public.json` file.  
+Open the `steempages` repository forked in Step 2. You have to edit `config.public.json` file.  
 
 Open the config file as shown in the figure below.  
 Put your Steemit ID for `AUTHOR`, and the URL of your Github Pages repository in `REPO_URL` (for example: https://github.com/appetizermonster/blog)  
