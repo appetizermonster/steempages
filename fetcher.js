@@ -23,11 +23,14 @@ async function fetchAllPosts(author) {
       if (permlink in permlinks)
         continue;
       permlinks[permlink] = true;
+
+      const metadata = JSON.parse(post.json_metadata);
       const result = {
         created: post.created,
         permlink: post.permlink,
         title: post.title,
-        body: post.body
+        body: post.body,
+        tags: metadata.tags
       };
       results.push(result);
     }

@@ -1,26 +1,21 @@
 'use strict';
 
+const _ = require('lodash');
 const fse = require('fs-extra');
 const git = require('simple-git');
 
 const fetcher = require('./fetcher');
 const formatter = require('./formatter');
-
-let githubUrl = process.env.REPO_URL;
-let token = process.env.API_TOKEN;
-
-// check for config
-if (fse.existsSync('./config.json')) {
-  const config = require('./config.json');
-  githubUrl = config.REPO_URL;
-  token = config.API_TOKEN;
-}
+const config = require('./config');
 
 const githubUrl_re = /github\.com\/([^\/]+)\/(.+)/i;
-const regexRet = githubUrl_re.exec(githubUrl);
+const regexRet = githubUrl_re.exec(config.REPO_URL);
 const username = regexRet[1];
 const reponame = regexRet[2];
-const repoUrl = `https://${username}:${token}@github.com/${username}/${reponame}.git`;
+const repoUrl = `https://${username}:${config.API_TOKEN}@github.com/${username}/${reponame}.git`;
+
+const excludeTags = config.EXCLUDE_TAGS.split(',');
+const excludePermlinks = config.EXCLUDE_PERMLINKS.split(',');
 
 async function updateRepoWithSteemit() {
   await fse.remove('out');
@@ -35,21 +30,35 @@ async function updateRepoWithSteemit() {
 
   // fetch posts
   console.log('fetching posts from steemit...');
+
+  if (config.DELETE_ALL_POSTS_BEFORE_BUILD)
+    await fse.remove('out/_posts');
   await fse.ensureDir('out/_posts');
 
   const posts = await fetcher.fetchAllPosts('heejin');
   let changed = false;
   for (const post of posts) {
+    const isExcludedPermlink = _.indexOf(excludePermlinks, post.permlink) >= 0;
+    if (isExcludedPermlink) {
+      console.log(`skipping ${post.permlink} becauseof excluded permlink`);
+      continue;
+    }
+    const hasExcludedTag = _.intersection(excludeTags, post.tags).length > 0;
+    if (hasExcludedTag) {
+      console.log(`skipping ${post.permlink} becauseof excluded tags`);
+      continue;
+    }
+
     const date = new Date(post.created);
     const dateStr = date.toISOString().replace(/T.+/i, '');
     const filename = `${dateStr}-${post.permlink}.md`;
     const filepath = `out/_posts/${filename}`;
-    if (fse.existsSync(filepath)) {
+    if (!config.OVERWRITE_POSTS && fse.existsSync(filepath)) {
       console.log(`skipping ${filepath}`);
       continue;
     }
 
-    const fileContents = formatter.makeMarkdown(post.title, post.body);
+    const fileContents = formatter.makeMarkdown(post.title, post.body, date);
     fse.writeFileSync(filepath, fileContents, {
       encoding: 'utf8'
     });
@@ -58,11 +67,11 @@ async function updateRepoWithSteemit() {
   }
 
   // commit changes
-  if (changed) {
+  if (!config.NO_PUSH && changed) {
     console.log('pushing the repo...');
     await repo.addConfig('user.name', 'steempages');
     await repo.addConfig('user.email', 'noemail');
-    await repo.add('_posts/*');
+    await repo.add('_posts');
     await repo.commit('Update posts by steempages');
     await repo.push('origin');
   } else {
