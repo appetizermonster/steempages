@@ -2,6 +2,16 @@
 
 const fse = require('fs-extra');
 
+function applyConfigFile(file) {
+  if (!fse.existsSync(file))
+    return;
+  const configJson = require(file);
+  for (const key in config) {
+    if (key in configJson)
+      config[key] = configJson[key];
+  }
+}
+
 const config = {
   REPO_URL: null,
   API_TOKEN: '',
@@ -21,12 +31,7 @@ for (const key in config) {
 }
 
 // config.json
-if (fse.existsSync('./config.json')) {
-  const configJson = require('./config.json');
-  for (const key in config) {
-    if (key in configJson)
-      config[key] = configJson[key];
-  }
-}
+applyConfigFile('./config.json');
+applyConfigFile('./config.public.json');
 
 module.exports = config;
