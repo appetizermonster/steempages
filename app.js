@@ -77,4 +77,7 @@ async function updateRepoWithSteemit() {
   process.exit(0);
 }
 
-updateRepoWithSteemit();
+updateRepoWithSteemit().catch((e) => {
+  console.log(e);
+  process.exit(1);
+});
