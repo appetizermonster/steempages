@@ -15,6 +15,11 @@ const reponame = regexRet[2];
 const repoUrl = `https://${username}:${config.API_TOKEN}@github.com/${username}/${reponame}.git`;
 
 async function updateRepoWithSteemit() {
+  if (!config.AUTHOR || config.AUTHOR.length <= 0) {
+    console.log('please set author');
+    process.exit(1);
+  }
+
   await fse.remove('out');
   await fse.ensureDir('out');
 
@@ -32,7 +37,7 @@ async function updateRepoWithSteemit() {
     await fse.remove('out/_posts');
   await fse.ensureDir('out/_posts');
 
-  const posts = await fetcher.fetchAllPosts('heejin');
+  const posts = await fetcher.fetchAllPosts(config.AUTHOR);
   let changed = false;
   for (const post of posts) {
     const isExcludedPermlink = _.indexOf(config.EXCLUDE_PERMLINKS, post.permlink) >= 0;

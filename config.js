@@ -13,6 +13,7 @@ function applyConfigFile(file) {
 }
 
 const config = {
+  AUTHOR: '',
   REPO_URL: null,
   API_TOKEN: '',
   DELETE_ALL_POSTS_BEFORE_BUILD: false,
