@@ -1,7 +1,7 @@
 {
   "AUTHOR": "heejin",
   "REPO_URL": "https://github.com/appetizermonster/blog",
-  "EXCLUDE_TAGS": ["chainbb-bug", "kr-qna", "steem-help"],
+  "EXCLUDE_TAGS": ["chainbb-bug", "kr-qna", "steem-help", "kr-life"],
   "EXCLUDE_PERMLINKS": [
     "hello-i-m-newbie-for-steemit",
     "suggestion-do-not-show-the-reward-information-that-the-post-author-will-get",
